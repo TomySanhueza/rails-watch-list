@@ -1,11 +1,11 @@
 <div class="container mt-4">
   <h1>New list</h1>
-
+<!-- Form for creating a new list -->
   <%= simple_form_for @list do |f| %>
     <%= f.input :name, label: "List name" %>
     <%= f.input :image_url, label: "Image URL (optional)", placeholder: "https://..." %>
     <%= f.submit "Create list", class: "btn btn-primary" %>
   <% end %>
-
+<!-- Back button to return to lists index -->
   <%= link_to "Back", lists_path, class: "btn btn-secondary mt-2" %>
 </div>
