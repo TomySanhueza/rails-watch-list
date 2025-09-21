@@ -1,6 +1,13 @@
-<%= simple_form_for [@list, @bookmark] do |f| %>
-  <%= f.association :movie %>
-  <%= f.input :comment %>
-  <%= f.submit class: 'btn btn-primary' %>
-<% end %>
-<%= link_to 'Back to list', list_path(@list), class: 'btn btn-secondary mt-3' %>
+<div class="container mt-4 p-4 bg-white shadow d-flex flex-column align-items-start">
+  <div class="div">
+    <h1 class="mb-4 fw-bold">New movie for "<%= @list.name %>"</h1>
+    <%= simple_form_for [@list, @bookmark] do |f| %>
+      <%= f.association :movie %>
+      <%= f.input :comment %>
+      <%= f.submit "Add a movie", class: 'btn btn-success' %>
+    <% end %>
+  </div>
+  <div class="div">
+    <%= link_to 'Back to list', list_path(@list), class: 'btn btn-secondary mt-3' %>
+  </div>
+</div>    

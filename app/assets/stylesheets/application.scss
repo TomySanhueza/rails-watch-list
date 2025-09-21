@@ -1,12 +1,23 @@
-// Graphical variables
+// 1. Sobrescribe variables de Bootstrap
+$font-family-sans-serif: 'Open Sans', sans-serif;
+
+// 2. Importa Bootstrap (usa las variables que definiste arriba)
+@import "bootstrap";
+
+// 3. Tus configuraciones adicionales
 @import "config/fonts";
 @import "config/colors";
 @import "config/bootstrap_variables";
 
-// External libraries
-@import "bootstrap";
+// 4. Librerías externas
 @import "font-awesome";
 
-// Your CSS partials
+// 5. Tus parciales
 @import "components/index";
 @import "pages/index";
+
+// 6. Overrides finales (si necesitas forzar algo)
+body {
+  font-family: $font-family-sans-serif;
+  background-color: #f5f3f4;
+}

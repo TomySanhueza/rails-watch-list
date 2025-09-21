@@ -1,28 +1,47 @@
+<div class="position-relative text-center">
+  <!-- Header image -->
+  <%= image_tag @list.image_url, class: "img-fluid w-100", style: "height: 300px; object-fit: cover;" %>
+  <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.5);"></div>
+  <div class="position-absolute top-50 start-50 translate-middle">
+    <h1 class="text-white fw-bold"><%= @list.name %></h1>
+  </div>
+</div>
+<!-- Container for the list details and movies -->
 <div class="container bg-white p-4 shadow mt-5">
-  <h1><%= @list.name %></h1>
-
-
-  <div class="cards">
-    <% @list.movies.each do |movie| %>
-      <div class="card-trip">
-        <%= image_tag(movie.poster_url) %>
-        <div class="card-trip-infos">
-          <div>
-            <div class="d-flex">
-              <h2><%= movie.title %></h2>
-              <h2 class="text-secondary ms-3">- <%= movie.rating.round(1) %> ⭐</h2>
+  <!-- Back and Delete buttons -->
+  <div class="mt-4 mb-2 d-flex px-5 gap-2">
+    <div class="me-auto p-2"><i class="fa-solid fa-film"></i></div>
+    <div class="p-2"><%= link_to 'Back to lists', lists_path, class: 'btn btn-secondary me-2' %></div>
+    <div class="p-2"><%= link_to 'Delete list', list_path(@list), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn btn-warning' %></div>
+  </div>
+  <!-- Form to add a new movie -->
+  <div class="mt-5">
+    <h3 class="fw-bold">Add a new movie</h3>
+    <%= simple_form_for [@list, @bookmark] do |f| %>
+      <%= f.association :movie %>
+      <%= f.input :comment %>
+      <%= f.submit "Add a movie", class: "btn btn-success" %>
+    <% end %>
+  </div>
+  <!-- Movies in the list -->
+  <div class="row mt-4">
+    <% @list.bookmarks.each do |bookmark| %>
+      <div class="col-md-3 mb-4">
+        <div class="card-trip h-100 shadow-sm">
+          <!-- Imagen -->
+          <%= image_tag bookmark.movie.poster_url, class: "img-fluid w-100", style: "height: 450px; object-fit: cover;" %>
+          <!-- Image Info -->
+          <div class="card-trip-infos p-3">
+            <div class="d-flex align-items-center">
+              <h5 class="mb-0 fw-bold"><%= bookmark.movie.title %></h5>
+              <span class="text-secondary ms-2"><%= bookmark.movie.rating.round(1) %> ⭐</span>
             </div>
-            <p><%= movie.overview %></p>
+            <p class="mt-2"><%= bookmark.movie.overview %></p>
+            <p class="text-muted">💬 <%= bookmark.comment %></p>
+            <%= link_to "Delete", list_bookmark_path(@list, bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
           </div>
-          <p> 💬 <%= @list.bookmarks.find_by(movie: movie)&.comment %></p>
-          <h2 class="card-trip-pricing">£99.99</h2>
         </div>
       </div>
     <% end %>
   </div>
-
-  <%= link_to 'New bookmark', new_list_bookmark_path(@list), class: 'btn btn-primary' %>
-  <%= link_to 'Back to lists', lists_path, class: 'btn btn-secondary' %>
-  
-
 </div>
