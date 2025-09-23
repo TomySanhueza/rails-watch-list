@@ -3,7 +3,7 @@
   <% if @list.image_url.present? %>
     <%= image_tag @list.image_url, class: "img-fluid w-100", style: "height: 300px; object-fit: cover;" %>
   <% else %>
-    <%= image_tag "placeholder.png", class: "img-fluid w-100", style: "height: 300px; object-fit: cover;" %>
+    <%= image_tag "placeholder.jpg", class: "img-fluid w-100", style: "height: 300px; object-fit: cover;" %>
   <% end %>
 
   <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.5);"></div>
@@ -39,7 +39,7 @@
           <% if bookmark.movie.poster_url.present? %>
             <%= image_tag bookmark.movie.poster_url, class: "img-fluid w-100", style: "height: 450px; object-fit: cover;" %>
           <% else %>
-            <%= image_tag "placeholder.png", class: "img-fluid w-100", style: "height: 450px; object-fit: cover;" %>
+            <%= image_tag "placeholder.jpg", class: "img-fluid w-100", style: "height: 450px; object-fit: cover;" %>
           <% end %>
 
           <div class="card-trip-infos p-3">
