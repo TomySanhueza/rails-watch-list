@@ -10,7 +10,12 @@
 require 'uri'
 require 'net/http'
 require 'json'
-url = URI("https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=3")
+
+puts "🧹 Borrando películas..."
+Movie.destroy_all
+
+puts "🎬 Cargando películas desde TheMovieDB..."
+url = URI("https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -30,19 +35,20 @@ results.each do |movie|
     rating: movie['vote_average']
   )
 end
+puts "✅ Películas cargadas: #{Movie.count}"
 
-# lists = [
-#   { name: "Cine Oscuro: Noches de Suspenso" },
-#   { name: "Viajes en el Tiempo y Realidades Alternas" },
-#   { name: "Amistades Inesperadas" },
-#   { name: "Viajes Épicos y Aventuras Legendarias" },
-#   { name: "Romances que Trascienden la Era" },
-#   { name: "Comicidades Locas y Risas Ajenas" },
-#   { name: "Fantasía y Magia Moderna" },
-#   { name: "Desastres y Catástrofes Cinematográficas" },
-#   { name: "Thrillers Psicológicos: La Mente en Juego" },
-#   { name: "Clásicos Imperecederos del Cine" }
-# ]
-# lists.each do |list_attrs|
-#   List.find_or_create_by!(name: list_attrs[:name])
-# end
+puts "🧹 Borrando listas..."
+List.destroy_all
+
+puts "🌱 Creando listas de ejemplo..."
+lists = [
+  { name: "Classics" },
+  { name: "Award Winners" },
+  { name: "Action" },
+]
+
+lists.each do |list_attrs|
+  List.find_or_create_by!(name: list_attrs[:name])
+end
+
+puts "✅ Listas creadas: #{List.count}"
