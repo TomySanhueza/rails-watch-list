@@ -1,11 +1,17 @@
 <div class="position-relative text-center">
   <!-- Header image -->
-  <%= image_tag @list.image_url, class: "img-fluid w-100", style: "height: 300px; object-fit: cover;" %>
+  <% if @list.image_url.present? %>
+    <%= image_tag @list.image_url, class: "img-fluid w-100", style: "height: 300px; object-fit: cover;" %>
+  <% else %>
+    <%= image_tag "placeholder.png", class: "img-fluid w-100", style: "height: 300px; object-fit: cover;" %>
+  <% end %>
+
   <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0,0,0,0.5);"></div>
   <div class="position-absolute top-50 start-50 translate-middle">
     <h1 class="text-white fw-bold"><%= @list.name %></h1>
   </div>
 </div>
+
 <!-- Container for the list details and movies -->
 <div class="container bg-white p-4 shadow mt-5">
   <!-- Back and Delete buttons -->
@@ -14,6 +20,7 @@
     <div class="p-2"><%= link_to 'Back to lists', lists_path, class: 'btn btn-secondary me-2' %></div>
     <div class="p-2"><%= link_to 'Delete list', list_path(@list), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn btn-warning' %></div>
   </div>
+
   <!-- Form to add a new movie -->
   <div class="mt-5">
     <h3 class="fw-bold">Add a new movie</h3>
@@ -23,14 +30,18 @@
       <%= f.submit "Add a movie", class: "btn btn-success" %>
     <% end %>
   </div>
+
   <!-- Movies in the list -->
   <div class="row mt-4">
     <% @list.bookmarks.each do |bookmark| %>
       <div class="col-md-3 mb-4">
         <div class="card-trip h-100 shadow-sm">
-          <!-- Imagen -->
-          <%= image_tag bookmark.movie.poster_url, class: "img-fluid w-100", style: "height: 450px; object-fit: cover;" %>
-          <!-- Image Info -->
+          <% if bookmark.movie.poster_url.present? %>
+            <%= image_tag bookmark.movie.poster_url, class: "img-fluid w-100", style: "height: 450px; object-fit: cover;" %>
+          <% else %>
+            <%= image_tag "placeholder.png", class: "img-fluid w-100", style: "height: 450px; object-fit: cover;" %>
+          <% end %>
+
           <div class="card-trip-infos p-3">
             <div class="d-flex align-items-center">
               <h5 class="mb-0 fw-bold"><%= bookmark.movie.title %></h5>
